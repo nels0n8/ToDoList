@@ -1,0 +1,93 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="UTF-8" name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" href="styles.css">
+</head>
+
+<body>
+
+    <div id="content" class="header">
+        <div class="timezone">
+            <!--Reloj-->
+            <a href="https://www.zeitverschiebung.net/es/country/cr"></a>
+            <iframe
+                src="https://www.zeitverschiebung.net/clock-widget-iframe-v2?language=es&size=small&timezone=America%2FCosta_Rica"
+                width="20%" height="auto" frameborder="0" seamless>
+            </iframe>
+        </div>
+
+        <!--header-->
+        <img class="icono" src="resources/ToDolist.png">
+        <h1 style="margin:5px">MIS TAREAS</h1>
+        <input type="text" id="inputTarea" placeholder="¿Cuál será tu siguiente tarea?..." autofocus>
+        <!--autofocus para que el input -->
+        <span onclick="nuevoItem()" class="addBtn">Agregar</span>
+    </div>
+
+    <ul id="UL">
+        <li>hola</li>
+        <!-- <li class="checked">Telefono </li> -->
+
+    </ul>
+
+    <script>
+        // Crear boton Cerrar en cada item
+        var myNodelist = document.getElementsByTagName("LI");
+        var i;
+        for (i = 0; i < myNodelist.length; i++) {
+            var span = document.createElement("SPAN");
+            var txt = document.createTextNode("\u00D7");
+            span.className = "close";
+            span.appendChild(txt);
+            myNodelist[i].appendChild(span);
+        }
+
+        // Click on a close button to hide the current list item
+        var close = document.getElementsByClassName("close");
+        var i;
+        for (i = 0; i < close.length; i++) {
+            close[i].onclick = function () {
+                var div = this.parentElement;
+                div.style.display = "none";
+            }
+        }
+        // se agrega el simbolo de check
+        var list = document.querySelector('ul');
+        list.addEventListener('click', function (ev) {
+            if (ev.target.tagName === 'LI') {
+                ev.target.classList.toggle('checked');
+            }
+        }, false);
+
+        // se crea un nuevo item de la lista al dar clic en agregar
+        function nuevoItem() {
+            var li = document.createElement("li");
+            var inputValue = document.getElementById("inputTarea").value;
+            var t = document.createTextNode(inputValue);
+            li.appendChild(t);
+            if (inputValue === '') {
+                alert("No has ingresado una tarea!");
+            } else {
+                document.getElementById("UL").appendChild(li);
+            }
+            document.getElementById("inputTarea").value = "";
+
+            var span = document.createElement("SPAN");
+            var txt = document.createTextNode("\u00D7"); /* \u00D7 es el simbolo de x en js*/
+            span.className = "close";
+            span.appendChild(txt);
+            li.appendChild(span);
+
+            for (i = 0; i < close.length; i++) {
+                close[i].onclick = function () {
+                    var div = this.parentElement;
+                    div.style.display = "none";
+                }
+            }
+        }
+    </script>
+</body>
+
+</html>

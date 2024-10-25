@@ -11,10 +11,11 @@
     <div id="content" class="header">
         <div class="time">
             <!--Reloj-->
-            <div style="text-align:center;padding:1em 0;"> 
-                <iframe src="https://www.zeitverschiebung.net/clock-widget-iframe-v2?language=es&size=small&timezone=America%2FCosta_Rica" 
-                width="100%" height="90" frameborder="0" >
-                </iframe> 
+            <div style="text-align:center;padding:1em 0;">
+                <iframe
+                    src="https://www.zeitverschiebung.net/clock-widget-iframe-v2?language=es&size=small&timezone=America%2FCosta_Rica"
+                    width="100%" height="90" frameborder="0">
+                </iframe>
             </div>
         </div>
 
@@ -23,36 +24,37 @@
         <h1 style="margin:5px">MIS TAREAS</h1>
         <input type="text" id="inputTarea" placeholder="¿Cuál será tu siguiente tarea?..." autofocus>
         <!--autofocus para que el input -->
-        <span onclick="nuevoItem()" class="addBtn">Agregar</span>
+        <span onclick="nuevoItem()" id="submit" class="addBtn" >Agregar</span>
+        <!--se puede usar buttom en lugar de span-->
     </div>
 
     <ul id="UL">
         <li>Tomar agua</li>
         <!-- <li class="checked">Telefono </li> -->
-
     </ul>
 
     <script>
         // Crear boton Cerrar en cada item
-        var myNodelist = document.getElementsByTagName("LI");
+        var lista = document.querySelectorAll("LI"); //se crea lista con elementos de las listas en li (ul, li)
         var i;
-        for (i = 0; i < myNodelist.length; i++) {
+        for (i = 0; i < lista.length; i++) {
             var span = document.createElement("SPAN");
-            var txt = document.createTextNode("\u00D7");
-            span.className = "close";
-            span.appendChild(txt);
-            myNodelist[i].appendChild(span);
+            var txt = document.createTextNode("\u00D7"); // se crea texto el icono x 
+            span.className = "close"; // se crea el boton 
+            span.appendChild(txt); // a la variable del elemento del boton se agrega el texto de la X
+            lista[i].appendChild(span); // a cada item de la lista se agrega el elemento ya listo 
         }
 
-        // Click on a close button to hide the current list item
+        // clic en el boton X para cerrar y ocultar item
         var close = document.getElementsByClassName("close");
         var i;
         for (i = 0; i < close.length; i++) {
-            close[i].onclick = function () {
-                var div = this.parentElement;
-                div.style.display = "none";
+            close[i].onclick = function () { // se crea funcion para cerrar
+                var div = this.parentElement; // esa seccion del arbol de html
+                div.style.display = "none"; // cierra, display
             }
         }
+
         // se agrega el simbolo de check
         var list = document.querySelector('ul');
         list.addEventListener('click', function (ev) {
@@ -61,29 +63,36 @@
             }
         }, false);
 
+
         // se crea un nuevo item de la lista al dar clic en agregar
+
         function nuevoItem() {
+
             var li = document.createElement("li");
             var inputValue = document.getElementById("inputTarea").value;
             var t = document.createTextNode(inputValue);
             li.appendChild(t);
+
+
             if (inputValue === '') {
                 alert("No has ingresado una tarea!");
             } else {
                 document.getElementById("UL").appendChild(li);
             }
             document.getElementById("inputTarea").value = "";
+            //document.onclick   autofocus despues de agregar item
+
 
             var span = document.createElement("SPAN");
             var txt = document.createTextNode("\u00D7"); /* \u00D7 es el simbolo de x en js*/
-            span.className = "close";
-            span.appendChild(txt);
-            li.appendChild(span);
+            span.className = "close"; // close del css
+            span.appendChild(txt); // agrega un nodo nuevo a la lista
+            li.appendChild(span); // a la lista se agrega un nuevo item con el nodo creado
 
             for (i = 0; i < close.length; i++) {
-                close[i].onclick = function () {
+                close[i].onclick = function () { // en el item que da clic
                     var div = this.parentElement;
-                    div.style.display = "none";
+                    div.style.display = "none"; // desaparece 
                 }
             }
         }
